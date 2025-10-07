@@ -1,0 +1,12 @@
+.DS_Store
+.vscode/
+Assembly-Csharp-Editor.csproj
+Assembly-Csharp.csproj
+p2_mac
+p2_windows/
+Logs/
+Packages/
+UserSettings/
+p2_mac.app
+p2.sln
+Library
