@@ -25,12 +25,11 @@ public class PlatformSpawner : MonoBehaviour
 
     void OnPlayerDied(PlayerDiedEvent e)
     {
-        Vector3 deathPos = e.deathPosition;
-        deathPos.y += 0.0f;
+        Vector2 deathPos = e.deathPosition;
+        Vector2 playerSize = e.deathPosition;
 
-        GameObject platform = Instantiate(platformPrefab, deathPos, Quaternion.identity);
-        TemporaryPlatform temp = platform.AddComponent<TemporaryPlatform>();
+        Instantiate(platformPrefab, deathPos, Quaternion.identity);
 
-        temp.Init(platformLifetime, flashStartTime, flashSpeed);
+        // temp.Init(platformLifetime, flashStartTime, flashSpeed);
     }
 }

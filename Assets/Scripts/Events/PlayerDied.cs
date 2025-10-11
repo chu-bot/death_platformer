@@ -3,10 +3,12 @@ using UnityEngine;
 public class PlayerDiedEvent
 {
     public Vector2 deathPosition;
+    public Vector2 playerSize;
 
-    public PlayerDiedEvent(Vector2 pos)
+    public PlayerDiedEvent(Vector2 deathPosition, Vector2 playerSize)
     {
-        deathPosition = pos;
+        this.deathPosition = deathPosition;
+        this.playerSize = playerSize;
     }
 
     public override string ToString()

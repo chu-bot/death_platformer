@@ -1,9 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(PlatformSpawner))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(GroundDetector))]
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private Vector3 spawnPoint;
+    private GroundDetector groundDetector;
+    private Vector2 spawnPoint;
+
+    public Vector2 playerSize;
+
 
     public int currentLevel = 1;
 
@@ -11,9 +20,15 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Screen.SetResolution(1920, 1080, false);
+        Screen.SetResolution(1920, 1080, false); // figure out a better place to put this
         rb = GetComponent<Rigidbody2D>();
-        spawnPoint = transform.position;
+        groundDetector = GetComponent<GroundDetector>();
+        groundDetector.Init(playerSize);
+    }
+
+    void Init(Vector2 spawnPoint)
+    {
+        this.spawnPoint = spawnPoint;
     }
 
     void OnEnable()
@@ -27,7 +42,7 @@ public class Player : MonoBehaviour
         if (eyesObject == null) return;
 
         float offsetAmount = 0.05f;
- 
+
         Vector2 targetLocalPos = new Vector2(xDir.x * offsetAmount, 0f);
 
         eyesObject.transform.localPosition = targetLocalPos;
@@ -40,8 +55,17 @@ public class Player : MonoBehaviour
         transform.position = spawnPoint;
     }
 
-    public void SetSpawnPoint(Vector3 newPoint)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        spawnPoint = newPoint;
+        if (collision.CompareTag("Goal"))
+        {
+            EventBus.Publish(new ReachGoalEvent());
+            // player.currentLevel += 1;
+            // gameWon.enabled = true;
+        }
+        else if (collision.CompareTag("Trap") || collision.CompareTag("Projectile"))
+        {
+            EventBus.Publish(new PlayerDiedEvent(transform.position, playerSize));
+        }
     }
 }

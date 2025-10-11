@@ -26,13 +26,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Example: kill player if hit
-        if (other.CompareTag("Player"))
-        {
-            EventBus.Publish(new PlayerDiedEvent(other.transform.position));
-        }
-
-        else if (other.CompareTag("PlayerPlatform"))
+        if (other.CompareTag("PlayerPlatform"))
         {
             Destroy(other.gameObject);
         }
