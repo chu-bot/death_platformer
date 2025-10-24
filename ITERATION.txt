@@ -1,0 +1,6 @@
+The main feedback I received was about how my game felt unsatisfying to play, whether that be the small jump bugs or
+platforms spawning too far above to actually make sense. Additionally, the automatically kill yourself mechanic
+was too OP. Finally, the single level I had did not fully make use of this mechanic. I expanded on the levels, adding
+a menu so that the player isn't thrust in and emphasized on showing, not telling. Additionally, I added an element
+where the player actually has a corpse, so there's a layer where you feel bad. Finally, I tried to clean up the movement
+and add QoL changes like a coyote jump, faster downwards acceleration, and fixing the jump bug. 

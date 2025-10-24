@@ -1,16 +1,13 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PlatformSpawner))]
 [RequireComponent(typeof(PlayerMovement))]
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(GroundDetector))]
+[RequireComponent(typeof(PlayerResizer))]
 public class Player : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private GroundDetector groundDetector;
-    private Vector2 spawnPoint;
-
     public Vector2 playerSize;
 
 
@@ -20,39 +17,24 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Screen.SetResolution(1920, 1080, false); // figure out a better place to put this
-        rb = GetComponent<Rigidbody2D>();
-        groundDetector = GetComponent<GroundDetector>();
-        groundDetector.Init(playerSize);
+        Screen.SetResolution(1920, 1080, false);
     }
 
-    void Init(Vector2 spawnPoint)
+    public void Init(Vector2 playerSize)
     {
-        this.spawnPoint = spawnPoint;
-    }
-
-    void OnEnable()
-    {
-        // Subscribe to the death event so we can respawn
-        EventBus.Subscribe<PlayerDiedEvent>(OnPlayerDied);
+        this.playerSize = playerSize;
     }
 
     public void MoveEyes(Vector2 xDir)
     {
-        if (eyesObject == null) return;
+        if (eyesObject == null) 
+        {
+            return;
+        }
 
-        float offsetAmount = 0.05f;
-
+        float offsetAmount = 0.1f;
         Vector2 targetLocalPos = new Vector2(xDir.x * offsetAmount, 0f);
-
         eyesObject.transform.localPosition = targetLocalPos;
-    }
-
-
-    private void OnPlayerDied(PlayerDiedEvent e)
-    {
-        rb.linearVelocity = Vector2.zero;
-        transform.position = spawnPoint;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -60,8 +42,6 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Goal"))
         {
             EventBus.Publish(new ReachGoalEvent());
-            // player.currentLevel += 1;
-            // gameWon.enabled = true;
         }
         else if (collision.CompareTag("Trap") || collision.CompareTag("Projectile"))
         {

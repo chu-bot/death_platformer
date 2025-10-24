@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Ground
-  - Platform
-  - PlayerPlatform
   - Goal
+  - Trap
+  - Projectile
+  - SpawnPoint
+  - PlayerPlatform
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - SpawnPoint
   - 
   - 
   - 

@@ -11,13 +11,11 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Called by whoever spawns this projectile
     public void Init(Vector2 dir, float velocity)
     {
         direction = dir.normalized;
         speed = velocity;
 
-        // Apply velocity immediately
         if (rb != null)
         {
             rb.linearVelocity = direction * speed;
@@ -26,11 +24,6 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("PlayerPlatform"))
-        {
-            Destroy(other.gameObject);
-        }
-
         Destroy(gameObject);
     }
 }

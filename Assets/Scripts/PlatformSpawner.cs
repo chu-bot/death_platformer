@@ -3,13 +3,7 @@ using UnityEngine;
 public class PlatformSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    public GameObject platformPrefab;
-    [Tooltip("Platform Lifetime")]
-    [SerializeField] private float platformLifetime = 12f;
-    [Tooltip("When to flash")]
-    [SerializeField] private float flashStartTime = 9f;
-    [Tooltip("Flashing speed (times per second).")]
-    [SerializeField] private float flashSpeed = 5f;
+    public GameObject deathPrefab;
 
     private Subscription<PlayerDiedEvent> deathEvent;
 
@@ -26,10 +20,9 @@ public class PlatformSpawner : MonoBehaviour
     void OnPlayerDied(PlayerDiedEvent e)
     {
         Vector2 deathPos = e.deathPosition;
-        Vector2 playerSize = e.deathPosition;
+        Vector2 playerSize = e.playerSize;
 
-        Instantiate(platformPrefab, deathPos, Quaternion.identity);
-
-        // temp.Init(platformLifetime, flashStartTime, flashSpeed);
+        GameObject deathObject = Instantiate(deathPrefab, deathPos, Quaternion.identity);
+        deathObject.GetComponent<PlayerResizer>().Resize(playerSize);
     }
 }
